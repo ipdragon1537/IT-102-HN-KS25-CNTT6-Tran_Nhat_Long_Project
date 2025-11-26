@@ -206,4 +206,72 @@ void F02_updatePatient() {
     xoaEnter();
     printf("Cap nhat thong tin benh nhan thanh cong!\n");
 }
+void F03_dischargePatient(){
+	char cardId[10];
+	printf ("---XUAT VIEN(XOA BENH NHAN)---\n");
+	printf ("Nhap ma ho so (cardId) cua benh nhan can xuat vien: ");
+	fgets(cardId,sizeof(cardId), stdin);
+	cardId[strcspn(cardId, "\n")] = '\0';
+	int index = findPatientIndex(cardId);
+	if (index == -1){
+		printf ("Loi:Khong tim thay ma benh nhan\n");
+	}
+	for (int i = index;i<patientCount-1;i++){
+		patients[i]=patients[i+1];
+	}
+	patientCount--;
+	printf ("Xuat vien benh nhan thanh cong");
+}
+void F04_displayAllPatients(){
+    printf("---DANH SACH BENH NHAN---\n");
+    if (patientCount == 0){
+        printf("Khong co benh nhan nao trong danh sach.\n");
+        return;
+    }
+
+    int pageSize;
+    printf("Nhap so benh nhan muon hien thi tren moi trang: ");
+    while (scanf("%d", &pageSize) != 1 || pageSize <= 0) {
+        while (getchar() != '\n');
+        printf("Gia tri khong hop le. Vui long nhap mot so nguyen duong: ");
+    }
+    while (getchar() != '\n');
+    int totalPages = (patientCount + pageSize - 1) / pageSize;
+    int currentPage = 1;
+    while (1) {
+        #ifdef _WIN32
+                system("cls");
+        #else
+                system("clear");
+        #endif
+        printf("---DANH SACH BENH NHAN---\n");
+        printf("Trang %d/%d (Hien thi %d benh nhan moi trang)\n", currentPage, totalPages, pageSize);
+        printf("----------------------------------------\n");
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = startIndex + pageSize;
+        if (endIndex > patientCount) {
+            endIndex = patientCount;
+        }
+        for (int i = startIndex; i < endIndex; i++){
+            printf("Ma ho so: %s, Ten: %s, SDT: %s, Cong no: %.2lf, So ngay kham: %d\n",
+                   patients[i].cardId, patients[i].name, patients[i].phone, patients[i].debt, patients[i].visitDays);
+        }
+
+        printf("----------------------------------------\n");
+        printf("Nhap so trang de xem (1-%d), hoac 0 de thoat: ", totalPages);
+        int nextPage;
+        if (scanf("%d", &nextPage) != 1) {
+            nextPage = -1;
+        }
+        while (getchar() != '\n');
+
+        if (nextPage == 0) {
+            break;
+        } else if (nextPage >= 1 && nextPage <= totalPages) {
+            currentPage = nextPage;
+        } else {
+            printf("So trang khong hop le. Vui long nhap lai.\n");
+        }
+    }
+}
 
