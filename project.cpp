@@ -3,6 +3,7 @@
 #include <ctype.h>
 #define MAX_PATIENTS 100
 #define MAX_RECORDS 500
+#include <stdlib.h>
 struct Patient {
     char cardId[10];       
     char name[50];       
@@ -27,22 +28,19 @@ void F01_addPatient();
 void F02_updatePatient();
 void F03_dischargePatient();
 void F04_displayAllPatients();
-void F05_searchPatient();
-void F06_sortPatients();
-void F07_addRecord();
-void F08_viewPatientRecords();
 int findPatientIndex(char cardId[]);
 int isCardIdUnique(char cardId[]);
 void sortPatientsByDebt(int order);
 char my_tolower(char c);
-
 char my_tolower(char c) {
     if (c >= 'A' && c <= 'Z') {
         return c + ('a' - 'A');
     }
     return c;
 }
+int mySystemVariable;
 int main() {
+	const char* system("cls");
     int choice;
     do {
         displayMenu();
@@ -65,16 +63,16 @@ int main() {
 			   F04_displayAllPatients(); 
 			   break;
             case 5: 
-			    F05_searchPatient(); 
+			    
 			    break;
             case 6:
-			    F06_sortPatients(); 
+			    
 				break;
             case 7:
-			    F07_addRecord(); 
+			    
 				break;
             case 8: 
-			    F08_viewPatientRecords(); 
+			     
 				break;
             case 9: 
 			    printf("Thoat chuong trinh. Tam biet!\n"); 
@@ -90,7 +88,6 @@ int main() {
 
     return 0;
 }
-
 void xoaEnter() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
@@ -154,10 +151,13 @@ void F01_addPatient() {
         printf("Nhap so dien thoai: ");
         fgets(newPatient.phone, sizeof(newPatient.phone), stdin);
         newPatient.phone[strcspn(newPatient.phone, "\n")] = '\0';
+        size_t phoneLength = strlen(newPatient.phone);
         if (strlen(newPatient.phone) == 0) {
             printf("Loi: So dien thoai khong duoc rong.\n");
-        }
-    } while (strlen(newPatient.phone) == 0);
+        } else if (phoneLength < 10){
+        	printf("Loi: So dien thoai phai co it nhat 10 ky tu.\n");
+		}
+    } while (strlen(newPatient.phone) < 10);
     do {
         printf("Nhap cong no ban dau: ");
         if (scanf("%lf", &newPatient.debt) != 1 || newPatient.debt < 0) {
@@ -206,6 +206,7 @@ void F02_updatePatient() {
     xoaEnter();
     printf("Cap nhat thong tin benh nhan thanh cong!\n");
 }
+// Xuat vien(xoa benh nhan)
 void F03_dischargePatient(){
 	char cardId[10];
 	printf ("---XUAT VIEN(XOA BENH NHAN)---\n");
@@ -274,4 +275,3 @@ void F04_displayAllPatients(){
         }
     }
 }
-
