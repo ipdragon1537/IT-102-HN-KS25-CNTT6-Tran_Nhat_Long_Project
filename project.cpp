@@ -223,13 +223,15 @@ void F03_dischargePatient(){
 	patientCount--;
 	printf ("Xuat vien benh nhan thanh cong");
 }
-void F04_displayAllPatients(){
+void F04_displayAllPatients() {
     printf("---DANH SACH BENH NHAN---\n");
-    if (patientCount == 0){
+    
+    if (patientCount == 0) {
         printf("Khong co benh nhan nao trong danh sach.\n");
+        printf("Nhan phim bat ky de tiep tuc...");
+        getchar();
         return;
     }
-
     int pageSize;
     printf("Nhap so benh nhan muon hien thi tren moi trang: ");
     while (scanf("%d", &pageSize) != 1 || pageSize <= 0) {
@@ -239,12 +241,14 @@ void F04_displayAllPatients(){
     while (getchar() != '\n');
     int totalPages = (patientCount + pageSize - 1) / pageSize;
     int currentPage = 1;
+    
     while (1) {
         #ifdef _WIN32
-                system("cls");
+            system("cls");
         #else
-                system("clear");
+            system("clear");
         #endif
+        
         printf("---DANH SACH BENH NHAN---\n");
         printf("Trang %d/%d (Hien thi %d benh nhan moi trang)\n", currentPage, totalPages, pageSize);
         printf("----------------------------------------\n");
@@ -253,25 +257,60 @@ void F04_displayAllPatients(){
         if (endIndex > patientCount) {
             endIndex = patientCount;
         }
-        for (int i = startIndex; i < endIndex; i++){
-            printf("Ma ho so: %s, Ten: %s, SDT: %s, Cong no: %.2lf, So ngay kham: %d\n",
-                   patients[i].cardId, patients[i].name, patients[i].phone, patients[i].debt, patients[i].visitDays);
+        for (int i = startIndex; i < endIndex; i++) {
+            printf("%d. Ma ho so: %s, Ten: %s, SDT: %s, Cong no: %.2lf, So ngay kham: %d\n",
+                   i + 1, patients[i].cardId, patients[i].name, 
+                   patients[i].phone, patients[i].debt, patients[i].visitDays);
         }
 
         printf("----------------------------------------\n");
-        printf("Nhap so trang de xem (1-%d), hoac 0 de thoat: ", totalPages);
-        int nextPage;
-        if (scanf("%d", &nextPage) != 1) {
-            nextPage = -1;
+        printf("DANG HIEN THI TRANG %d/%d\n", currentPage, totalPages);
+        if (currentPage < totalPages) {
+            printf("\n=== TU DONG CHUYEN TRANG ===\n");
+            printf("1. Trang tiep theo (trang %d)\n", currentPage + 1);
+            printf("2. Trang cu the\n");
+            printf("0. Thoat\n");
+            printf("Lua chon cua ban: ");
+        } else {
+            printf("\n=== DANG O TRANG CUOI ===\n");
+            printf("1. Ve trang dau\n");
+            printf("2. Trang cu the\n");
+            printf("0. Thoat\n");
+            printf("Lua chon cua ban: ");
+        }
+        int choice;
+        if (scanf("%d", &choice) != 1) {
+            choice = -1;
         }
         while (getchar() != '\n');
-
-        if (nextPage == 0) {
-            break;
-        } else if (nextPage >= 1 && nextPage <= totalPages) {
-            currentPage = nextPage;
-        } else {
-            printf("So trang khong hop le. Vui long nhap lai.\n");
+        switch (choice) {
+            case 0:
+                return;
+                
+            case 1:
+                if (currentPage < totalPages) {
+                    currentPage++; 
+                } else {
+                    currentPage --;
+                }
+                break;
+            case 2:
+                printf("Nhap so trang muon xem (1-%d): ", totalPages);
+                int targetPage;
+                if (scanf("%d", &targetPage) == 1 && targetPage >= 1 && targetPage <= totalPages) {
+                    currentPage = targetPage;
+                } else {
+                    printf("So trang khong hop le! Van giu nguyen trang hien tai.\n");
+                    printf("Nhan phim bat ky de tiep tuc...");
+                    getchar();
+                }
+                while (getchar() != '\n');
+                break;
+            default:
+                printf("Lua chon khong hop le! Vui long chon 0, 1 hoac 2.\n");
+                printf("Nhan phim bat ky de tiep tuc...");
+                getchar();
+                break;
         }
     }
 }
