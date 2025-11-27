@@ -622,7 +622,6 @@ void startNewPaginationSession(struct Patient list[], int count, char* title) {
         }
     }
 }
-// Ghi nh?n khám b?nh
 void F07_addRecord() {
     printf("--- GHI NHAN KHAM BENH ---\n");
     
@@ -630,12 +629,10 @@ void F07_addRecord() {
         printf("Khong co benh nhan nao trong danh sach.\n");
         return;
     }
-    
     if (recordCount >= MAX_RECORDS) {
         printf("Loi: Danh sach kham benh da day.\n");
         return;
     }
-    
     char cardId[10];
     printf("Nhap ma ho so (cardId) cua benh nhan: ");
     fgets(cardId, sizeof(cardId), stdin);
@@ -649,11 +646,7 @@ void F07_addRecord() {
     
     struct Record newRecord;
     newRecord.recId = nextRecId++;
-    
-    // Copy cardId t? b?nh nhân
     strcpy(newRecord.cardId, cardId);
-    
-    // Nh?p ngày khám
     do {
         printf("Nhap ngay kham (dd/mm/yyyy): ");
         fgets(newRecord.date, sizeof(newRecord.date), stdin);
@@ -672,11 +665,7 @@ void F07_addRecord() {
             printf("Loi: Tinh trang khong duoc rong.\n");
         }
     } while (strlen(newRecord.status) == 0);
-    
-    // Thêm record vào danh sách
     records[recordCount++] = newRecord;
-    
-    // C?p nh?t s? ngày khám c?a b?nh nhân
     patients[patientIndex].visitDays++;
     
     printf("Ghi nhan kham benh thanh cong!\n");
@@ -703,8 +692,6 @@ void F08_viewMedicalHistory() {
         printf("Loi: Khong tim thay benh nhan voi ma ho so da nhap.\n");
         return;
     }
-    
-    // Tìm các record c?a b?nh nhân
     struct Record patientRecords[MAX_RECORDS];
     int patientRecordCount = 0;
     
@@ -719,8 +706,6 @@ void F08_viewMedicalHistory() {
         printf("Benh nhan %s chua co lich su kham benh.\n", patients[patientIndex].name);
         return;
     }
-    
-    // Phân trang l?ch s? khám b?nh
     int pageSize;
     printf("Nhap so lan kham muon hien thi tren moi trang: ");
     if (scanf("%d", &pageSize) != 1 || pageSize <= 0) {
@@ -831,3 +816,4 @@ void F08_viewMedicalHistory() {
         }
     }
 }
+
