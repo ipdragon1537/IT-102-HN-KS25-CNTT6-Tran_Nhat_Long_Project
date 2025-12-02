@@ -94,6 +94,7 @@ int isRecordDuplicate(const char* cardId, const char* date) {
 
 // Them du lieu mau de kiem tra
 void addSamplePatients() {
+    // Them 8 benh nhan mau nhu da co
     if (patientCount < MAX_PATIENTS) {
         strcpy(patients[patientCount].cardId, "A001");
         strcpy(patients[patientCount].name, "Nguyen Van A");
@@ -110,7 +111,70 @@ void addSamplePatients() {
         patients[patientCount].visitDays = 5;
         patientCount++;
     }
-    // ... them cac benh nhan mau khac
+    if (patientCount < MAX_PATIENTS) {
+        strcpy(patients[patientCount].cardId, "C003");
+        strcpy(patients[patientCount].name, "Tran Van C");
+        strcpy(patients[patientCount].phone, "0909090909");
+        patients[patientCount].debt = 0.00;
+        patients[patientCount].visitDays = 1;
+        patientCount++;
+    }
+    if (patientCount < MAX_PATIENTS) {
+        strcpy(patients[patientCount].cardId, "D004");
+        strcpy(patients[patientCount].name, "Pham Thi D");
+        strcpy(patients[patientCount].phone, "0812345678");
+        patients[patientCount].debt = 250.75;
+        patients[patientCount].visitDays = 3;
+        patientCount++;
+    }
+    if (patientCount < MAX_PATIENTS) {
+        strcpy(patients[patientCount].cardId, "E005");
+        strcpy(patients[patientCount].name, "Vu Van E");
+        strcpy(patients[patientCount].phone, "0365478912");
+        patients[patientCount].debt = 1500.00;
+        patients[patientCount].visitDays = 8;
+        patientCount++;
+    }
+    if (patientCount < MAX_PATIENTS) {
+        strcpy(patients[patientCount].cardId, "F006");
+        strcpy(patients[patientCount].name, "Hoang Le F");
+        strcpy(patients[patientCount].phone, "0778945612");
+        patients[patientCount].debt = 75.50;
+        patients[patientCount].visitDays = 1;
+        patientCount++;
+    }
+    if (patientCount < MAX_PATIENTS) {
+        strcpy(patients[patientCount].cardId, "G007");
+        strcpy(patients[patientCount].name, "Nguyen Huu G");
+        strcpy(patients[patientCount].phone, "0923456789");
+        patients[patientCount].debt = 3200.00;
+        patients[patientCount].visitDays = 15;
+        patientCount++;
+    }
+    if (patientCount < MAX_PATIENTS) {
+        strcpy(patients[patientCount].cardId, "H008");
+        strcpy(patients[patientCount].name, "Tran Thi H");
+        strcpy(patients[patientCount].phone, "0889123456");
+        patients[patientCount].debt = 600.25;
+        patients[patientCount].visitDays = 4;
+        patientCount++;
+    }
+    if (patientCount < MAX_PATIENTS) {
+        strcpy(patients[patientCount].cardId, "I009");
+        strcpy(patients[patientCount].name, "Le Van I");
+        strcpy(patients[patientCount].phone, "0934567890");
+        patients[patientCount].debt = 400.00;
+        patients[patientCount].visitDays = 2;
+        patientCount++;
+    }
+    if (patientCount < MAX_PATIENTS) {
+        strcpy(patients[patientCount].cardId, "K010");
+        strcpy(patients[patientCount].name, "Cao Thi K");
+        strcpy(patients[patientCount].phone, "0798765432");
+        patients[patientCount].debt = 950.00;
+        patients[patientCount].visitDays = 6;
+        patientCount++;
+    }
     printf("Da them %d benh nhan mau vao danh sach.\n", patientCount);
 }
 
@@ -1238,3 +1302,4 @@ int comparePatientsDescending(const void *a, const void *b) {
     if (patientA->debt < patientB->debt) return 1;
     return 0;
 }
+
